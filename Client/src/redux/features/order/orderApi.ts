@@ -37,6 +37,14 @@ import { baseApi } from "../../api/baseApi";
 
       providesTags: ["order"],
     }),
+    getAllSuccessfulOrders: builder.query({
+      query: () => ({
+        url: '/orders/successful-orders',
+        method: "GET",
+      }),
+
+      providesTags: ["order"],
+    }),
    
 
 
@@ -77,5 +85,6 @@ export const {
   useGetSingleOrderQuery,
   useCreatePaymentSSLMutation,
   useUpdateOrderDeliveryMutation,
- useGetSingleOrderByOrderNumberQuery
+ useGetSingleOrderByOrderNumberQuery,
+ useGetAllSuccessfulOrdersQuery
 } = orderApi;

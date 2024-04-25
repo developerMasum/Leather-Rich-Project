@@ -1,9 +1,12 @@
 import { Order } from './order.model';
 
 import { TOrder } from './order.interface';
+import { sendEmail } from '../../utils/sendEmail';
 
 const createOrderIntoDB = async (payload: TOrder) => {
   const result = await Order.create(payload);
+ //send email with invoice
+  sendEmail(payload);
   return result;
 };
 
@@ -34,10 +37,19 @@ const updateOrderIntoDB = async (id: string, payload: Partial<TOrder>) => {
   return result;
 };
 
+const getSuccessfulDelivery = async () => {
+  const result = await Order.find({
+    deliveryStatus: "delivered",
+  }).sort({ createdAt: -1 });
+
+  return result;
+};
+
 export const orderServices = {
   getAllOrdersFromDB,
   getSingleOrderFromDB,
   createOrderIntoDB,
   updateOrderIntoDB,
   getSingleOrderByOrderNumberFromDB,
+  getSuccessfulDelivery
 };

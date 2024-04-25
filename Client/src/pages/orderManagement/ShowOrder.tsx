@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LiaShippingFastSolid } from "react-icons/lia";
+import { IoCheckmarkDoneCircle } from "react-icons/io5";
 
-import { Button, Dropdown, Table, Tag } from "antd";
+import { BiLoader } from "react-icons/bi";
+import { Button, Dropdown, Table } from "antd";
 import { useState } from "react";
 import {
   useGetAllOrdersQuery,
@@ -10,6 +13,12 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import CustomeDivider from "../../components/customeDivider/CustomeDivider";
+import { PDFDownloadLink, View } from "@react-pdf/renderer";
+import RRPdf from "../../utils/generatePdf";
+import { DownloadOutlined } from "@ant-design/icons";
+import PdfDocument from "../../components/pdfElements/MainPdfComponent";
+import InvoiceTableRow from "../../components/pdfElements/InvoiceTableRow";
+import InvoiceItemsTable from "../../components/pdfElements/InvoiceItemsTable";
 
 const items = [
   {
@@ -29,6 +38,7 @@ interface UpdateData {
 const ShowOrder = () => {
   const [userId, setUserId] = useState("");
   const { data: orders, isLoading, isFetching } = useGetAllOrdersQuery("");
+  // console.log(orders);
   const [updateOrderDelivery] = useUpdateOrderDeliveryMutation();
 
   const handleStatusUpdate = async (data: UpdateData) => {
@@ -38,6 +48,7 @@ const ShowOrder = () => {
         deliveryStatus: data.key,
       },
     };
+    // console.log(data.key);
 
     try {
       await updateOrderDelivery(updateData);
@@ -86,13 +97,24 @@ const ShowOrder = () => {
       title: "Delivery Status",
       dataIndex: "deliveryStatus",
       key: "deliveryStatus",
-      render: (record: any) => (
-        <Tag color={record.deliveryStatus === "Delivered" ? "green" : "red"}>
-          {record.deliveryStatus}
-        </Tag>
-      ),
-    },
+      render: (record: any) => {
+        switch (record) {
+          case "processing":
+            return (
+<p className="flex justify-start items-center gap-2 text-red-700 ">Processing<BiLoader size={25} /> </p>
 
+            );
+          case "shipped":
+            return (
+               <p className="flex justify-start items-center gap-2 text-cyan-700 ">Shipped<LiaShippingFastSolid size={25} /> </p>
+            );
+          case "delivered":
+            return <p className="flex justify-start items-center gap-2 text-green-700 ">Delivered<IoCheckmarkDoneCircle size={25} /> </p>;
+          default:
+            return record;
+        }
+      },
+    },
     {
       title: "Action",
       key: "update",
@@ -111,6 +133,39 @@ const ShowOrder = () => {
         </Link>
       ),
     },
+    {
+      title: "Download Invoice",
+      key: "invoice",
+      render: (_: any, record: any) => (
+        // <Link to={`/superAdmin/order-details/${record.key}`}>
+        //   <Button  type="dashed" danger>Download</Button>
+        // </Link>
+
+//<PDFDownloadLink
+// document={<PdfDocument data={record} />}
+// fileName={`invoice_${record.buyerName}_${record?.orderNumber}.pdf`}
+
+// >
+// {({ loading }) => (loading ? 'Loading...' :  <Button type="default" icon={<DownloadOutlined />} size={"middle"}>Download PDF</Button>)}
+// </PDFDownloadLink> 
+
+<PDFDownloadLink
+      document={<PdfDocument data={record} />}
+      fileName={`invoice_${record.buyerName}_${record?.orderNumber}.pdf`}
+    >
+      {({ loading }) => (
+        <View>
+          {/* <InvoiceTableRow invoice={record} /> */}
+          {/* <InvoiceItemsTable invoice={record} /> */}
+          
+          <Button type="default" icon={<DownloadOutlined />} size="middle">
+            {loading ? 'Loading...' : 'Download PDF'}
+          </Button>
+        </View>
+      )}
+    </PDFDownloadLink>
+      ),
+    },
   ];
 
   const tableData = orders?.data?.map(
@@ -123,6 +178,7 @@ const ShowOrder = () => {
       orderNumber,
       totalPrice,
       paymentSystem,
+      orderProduct
     }: any) => ({
       key: _id,
       buyerName,
@@ -132,6 +188,7 @@ const ShowOrder = () => {
       orderNumber,
       totalPrice,
       paymentSystem,
+      orderProduct
     })
   );
 

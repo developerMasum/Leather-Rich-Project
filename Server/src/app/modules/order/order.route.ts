@@ -13,6 +13,7 @@ router.post(
   orderController.createOrder,
 );
 router.get('/', orderController.getAllOrders);
+router.get('/successful-orders', orderController.successfulDelivery);
 router.patch('/update-delivery/:id', orderController.updateOrder);
 // router.put(
 //   '/product/:productId',

@@ -65,7 +65,18 @@ const updateOrder = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'order status  is updated succesfully',
+    message: 'order status  is updated successfully',
+    data: result,
+  });
+});
+
+const successfulDelivery: RequestHandler = catchAsync(async (req, res) => {
+   
+  const result = await orderServices.getSuccessfulDelivery();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Successful Orders retrieved successfully',
     data: result,
   });
 });
@@ -74,5 +85,6 @@ const updateOrder = catchAsync(async (req, res) => {
 export const orderController = {
 getAllOrders,getSingleOrder,createOrder,
 updateOrder,
-getSingleOrderByOrderNumber
+getSingleOrderByOrderNumber,
+successfulDelivery
 };

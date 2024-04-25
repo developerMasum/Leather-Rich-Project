@@ -51,8 +51,8 @@ const Footer = () => {
           <SocialIcons />
         </div>
       </div>
-      <div className="bg-gray-900 text-white ">
-        <p className="text-center text-balance pt-2 pb-10">
+      <div className="bg-gray-700 text-white text-sm ">
+        <p className="text-center text-balance pt-2 pb-2">
           Copyright © 2024 | LatherRich Lifestyle
         </p>
       </div>

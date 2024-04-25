@@ -34,6 +34,7 @@ export const adminPaths = [
         
         path: "/superAdmin/duplicate-product/:id",
         element: <TestVarient/>,
+        
       },
       {
         

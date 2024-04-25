@@ -29,6 +29,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 
 const UpdateProduct = () => {
   const { id } = useParams();
+  // console.log(id);
 
   const [form] = Form.useForm();
   const [sizeStockFields, setSizeStockFields] = useState([
@@ -41,7 +42,7 @@ const UpdateProduct = () => {
     isLoading,
     isFetching,
   } = useGetSingleProductForDetailsQuery(id);
-
+// console.log(product?.data[0]);
   const [updateData, { isLoading: isUpdating }] = useUpdateProductMutation();
   //test--------
   const handleAddSizeStock = () => {
@@ -49,9 +50,9 @@ const UpdateProduct = () => {
   };
 
   useEffect(() => {
-    if (product && product.data && product.data.sizeStok) {
+    if (product && product.data[0] && product.data[0].sizeStok) {
       setSizeStockFields(
-        product?.data?.sizeStok?.map(({ size, stock } :{size:string, stock:number}) => ({ size, stock }))
+        product?.data[0]?.sizeStok?.map(({ size, stock } :{size:string, stock:number}) => ({ size, stock }))
       );
     }
   }, [product]);
@@ -121,7 +122,10 @@ const UpdateProduct = () => {
   };
 
   return (
-    <Spin spinning={isLoading && isFetching}>
+
+  <>  
+  {
+    isLoading ? (<div className="flex justify-center items-center min-h-[80vh]"> <Spin/></div>) : (  <Spin className="flex justify-center items-center min-h-[80vh]" spinning={isLoading && isFetching}>
       <div className="container mx-auto max-w-3xl border border-neutral-400 pl-20">
         <CustomeDivider title="Update product" />
         <Form
@@ -131,7 +135,7 @@ const UpdateProduct = () => {
           wrapperCol={{ span: 20 }}
           onFinish={onFinish}
           layout="vertical"
-          initialValues={product ? product.data : {}}
+          initialValues={product ? product.data[0] : {}}
         >
           <Form.Item name="name" rules={[{ required: true }]}>
             <Input
@@ -215,7 +219,7 @@ const UpdateProduct = () => {
                     style={{ width: "100%" }}
                     className="font-bold p-1 text-gray-600"
                     placeholder="Size"
-                    defaultValue={product?.data?.sizeStok[index]?.size}
+                    defaultValue={product?.data[0]?.sizeStok[index]?.size}
                     value={field.size}
                     onChange={(e) =>
                       handleSizeStockChange(index, "size", e.target.value)
@@ -227,7 +231,7 @@ const UpdateProduct = () => {
                     style={{ width: "100%" }}
                     className="font-bold p-1 text-gray-600"
                     placeholder="Stock"
-                    defaultValue={product?.data?.sizeStok[index]?.stock}
+                    defaultValue={product?.data[0]?.sizeStok[index]?.stock}
                     value={field.stock}
                     onChange={(value) =>
                       handleSizeStockChange(index, "stock", value)
@@ -275,7 +279,10 @@ const UpdateProduct = () => {
           </Form.Item>
         </Form>
       </div>
-    </Spin>
+    </Spin>)
+  }
+  
+  </>
   );
 };
 
