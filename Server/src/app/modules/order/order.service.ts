@@ -40,7 +40,7 @@ const updateOrderIntoDB = async (id: string, payload: Partial<TOrder>) => {
 const getSuccessfulDelivery = async () => {
   const result = await Order.find({
     deliveryStatus: "delivered",
-  }).sort({ createdAt: -1 });
+  }).sort({ updatedAt: -1 });
 
   return result;
 };

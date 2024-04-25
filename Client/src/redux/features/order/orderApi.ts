@@ -27,6 +27,7 @@ import { baseApi } from "../../api/baseApi";
           body: orderData.data,
         };
       },
+      invalidatesTags:['order']
     }),
 
     getAllOrders: builder.query({
@@ -50,12 +51,13 @@ import { baseApi } from "../../api/baseApi";
 
     getSingleOrder: builder.query({
       query: (id) => {
-        console.log("success", id);
+        // console.log("success", id);
         return {
           url: `/orders/get-single-order/${id}`,
           method: "GET",
         };
       },
+      providesTags:['order']
     }),
     getSingleOrderByOrderNumber: builder.query({
       query: (id) => {

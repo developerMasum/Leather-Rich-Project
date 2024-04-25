@@ -30,9 +30,10 @@ const SellsHistory = () => {
       render: (text: string) => moment(text).format("MMMM Do YYYY"),
     },
     {
-      title: "Payment System",
-      key: "paymentSystem",
-      dataIndex: "paymentSystem",
+      title: "Delivery Date",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (text: string) => moment(text).format("MMMM Do YYYY"),
     },
     {
       title: "Order Amount (৳)",
@@ -65,7 +66,7 @@ const SellsHistory = () => {
       deliveryStatus,
       orderNumber,
       totalPrice,
-      paymentSystem,
+      updatedAt,
     }: any) => ({
       key: _id,
       buyerName,
@@ -74,7 +75,7 @@ const SellsHistory = () => {
       deliveryStatus,
       orderNumber,
       totalPrice,
-      paymentSystem,
+      updatedAt,
     })
   );
 

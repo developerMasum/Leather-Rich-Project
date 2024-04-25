@@ -124,15 +124,15 @@ const ShowOrder = () => {
         </Dropdown>
       ),
     },
-    {
-      title: "Action",
-      key: "details",
-      render: (_: any, record: any) => (
-        <Link to={`/superAdmin/order-details/${record.key}`}>
-          <Button>Details</Button>
-        </Link>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "details",
+    //   render: (_: any, record: any) => (
+    //     <Link to={`/superAdmin/order-details/${record.key}`}>
+    //       <Button>Details</Button>
+    //     </Link>
+    //   ),
+    // },
     {
       title: "Download Invoice",
       key: "invoice",
