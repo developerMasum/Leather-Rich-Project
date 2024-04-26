@@ -1,7 +1,7 @@
 
-import { TQueryParam, TResponseRedux } from "../../../types/global.type";
+// import { TQueryParam, TResponseRedux } from "../../../types/global.type";
 import { baseApi } from "../../api/baseApi";
-import { TUser } from "../auth/authSlice";
+// import { TUser } from "../auth/authSlice";
 
 const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -17,27 +17,11 @@ const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
-    getAllUsers: builder.query({
-      query: (args) => {
-        const params = new URLSearchParams();
-
-        if (args) {
-          args.forEach((item: TQueryParam) => {
-            params.append(item.name, item.value as string);
-          });
-        }
-
+    getAllUser: builder.query({
+      query: () => {
         return {
-          url: "/users/get-all-users",
+          url: "/users",
           method: "GET",
-          params: params,
-        };
-      },
-      providesTags: ["product"],
-      transformResponse: (response: TResponseRedux<TUser[]>) => {
-        return {
-          data: response.data,
-          meta: response.meta,
         };
       },
     }),
@@ -62,7 +46,7 @@ const userApi = baseApi.injectEndpoints({
 
 export const {
   useCreateUserMutation,
-  useGetAllUsersQuery,
+ useGetAllUserQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,
 } = userApi;
