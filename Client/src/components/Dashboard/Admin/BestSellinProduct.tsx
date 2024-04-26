@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Table } from 'antd';
 import type { TableProps } from 'antd';
 import { useGetAllProductsQuery } from '../../../redux/features/product/productApi';
+import { TProduct } from '../../../types/product.type';
 
 interface ProductInfo {
   _id: string;
@@ -13,12 +14,11 @@ interface ProductInfo {
 }
 
 const BestSellingProductList: React.FC = () => {
-  const [params, setParams] = useState<TQueryParam[]>([]);
+//   const [params, setParams] = useState([]);
   const { data: productsData } = useGetAllProductsQuery([
     { name: "sort", value: "-price" },
-    ...params,
   ]);
-  const productInfo: ProductInfo[] | undefined = productsData?.data;
+  const productInfo: TProduct[] | undefined = productsData?.data;
   console.log(productInfo);
 
   const columns: TableProps<ProductInfo>[ 'columns' ] = [
@@ -50,7 +50,7 @@ const BestSellingProductList: React.FC = () => {
     },
   ];
 
-  const data: ProductInfo[] = productInfo || [];
+  const data: [] | undefined = productInfo || [];
 
   return (
     <div className=' ps-10 mt-12 bg-white rounded-2xl px-3 py-2 mx-5'>
