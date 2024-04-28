@@ -1,57 +1,72 @@
 import { Link } from "react-router-dom";
 import SocialIcons from "./SocialIcons";
+import SubscribeInput from "./SubscripeInput";
+
 
 const Footer = () => {
   return (
-    <div className="w-full bg-tertiary mt-10">
-      <div className="container m-auto md:flex justify-between items-center p-20 gap-x-20">
-        <div className="leading-7">
-          <h5 className="text-xl text-gray-600 font-semibold tracking-wide border-b-2 border-[#bb6e6e]">
+    <div className="w-full bg-slate-800 mt-10 pt-12">
+      <div className="container mx-auto md:flex justify-between items-start p-10 gap-x-20">
+        <div className="leading-7 flex-shrink-0 w-full md:w-1/3">
+          <div className="flex flex-col justify-start items-start " > 
+
+          <div> <h5 className=" font-semibold text-gray-200 tracking-wide border-b-2 border-[#bb6e6e]">
             ABOUT US
           </h5>
-          <p className="text-balance text-gray-500">
+          <p className="text-balance text-sm mt-3 text-gray-200">
             Richkid is premium leather shoes and fashion accessories kingdom. We
             provide the best quality shoes and accessories for ladies and gents.
-          </p>
+          </p></div>
+          <div> <SubscribeInput /></div>
+
+          </div>
         </div>
-        <div className="leading-7">
-          <h5 className="text-xl text-gray-600 font-semibold tracking-wide border-b-2 border-[#bb6e6e]">
+        <div className="leading-7 flex-shrink-0 w-full md:w-1/3">
+         <div>  
+          
+
+         <div>  <h5 className="text-gray-200 font-semibold tracking-wide border-b-2 border-[#bb6e6e]">
             POLICY
           </h5>
-          <div className="flex-start flex-column justify-center gap-4">
+          <div className="mt-3 space-y-2">
             <Link
               to="/complain"
-              className="inline-block focus:outline-none hover:text-[#b35c5c] text-balance text-gray-500"
+              className="inline-block focus:outline-none text-sm hover:text-[#b35c5c] text-balance text-gray-200"
             >
               Exchange & Complaint
             </Link>
-
             <Link
               to="/"
-              className="inline-block focus:outline-none hover:text-[#b35c5c] text-balance text-gray-500"
+              className="inline-block focus:outline-none ms-3 text-sm hover:text-[#b35c5c] text-balance text-gray-200"
             >
               Privacy Policy
             </Link>
             <Link
               to="/"
-              className="inline-block focus:outline-none hover:text-[#b35c5c] text-balance text-gray-500"
+              className="inline-block focus:outline-none text-sm hover:text-[#b35c5c] text-balance text-gray-200"
             >
               Terms and Conditions
             </Link>
-          </div>
+          </div> </div>
+         <div>  <img src="https://voguesultana.com/images/payments.png" height={100}  width={400} alt="logo" /> </div>
+          
+             </div>
+         
         </div>
-        <div className="leading-7">
-          <h5 className="text-xl text-gray-600 font-semibold tracking-wide border-b-2 border-[#bb6e6e]">
+        <div className="leading-7 flex-shrink-0 w-full md:w-1/3">
+        <div className="flex flex-col justify-start items-start">  <div className="mb-8">
+          <h5 className="text-gray-200 font-semibold tracking-wide border-b-2 border-[#bb6e6e]">
             CONNECT WITH US
           </h5>
-          <p className="text-balance text-gray-500">
-            Join Our Facebook Group Richkid Offer and Review and Like Our Page.
+          <p className="text-balance text-gray-200 text-sm mt-3">
+            Join Our Facebook Group Richkid <br /> Offer and Review and Like Our Page.
           </p>
-
-          <SocialIcons />
+          </div>
+         <div> <SocialIcons /></div></div>
         </div>
       </div>
-      <div className="bg-gray-700 text-white text-sm ">
+     
+      <div className="bg-gray-700 text-white text-sm">
         <p className="text-center text-balance pt-2 pb-2">
           Copyright © 2024 | LatherRich Lifestyle
         </p>
