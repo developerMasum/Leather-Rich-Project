@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import CookieBanner from "../cookieBanner/CookieBanner";
 import NewBestSellingProducts from "../bestSellingProduct/NewBestSelling";
 
+
 const Home = () => {
   return (
     <>
@@ -41,10 +42,11 @@ const Home = () => {
       <CookieBanner />
 
       <WomenProduct />
-      <div className="mt-12 mb-12">
+      {/* <div className="mt-12 mb-12">
         <CustomeDivider title={" Kid's Collection"} />
-      </div>
+      </div> */}
       <KidProducts />
+
     </>
   );
 };

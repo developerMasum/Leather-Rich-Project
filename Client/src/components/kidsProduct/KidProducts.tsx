@@ -25,6 +25,14 @@ const KidProducts = () => {
   console.log(setParams);
   return (
     <div className="md:container mx-auto bg-white">
+      <div className="flex align-center  gap-5 items-center">
+        <h2 className="mt-20 border-black border-l-2 border-t-2 h-10 w-full"></h2>
+
+        <h2 className="pt-10 flex justify-center items-center md:w-[400px] md:text-[16px] text-[12px]">
+          KIDS COLLECTION
+        </h2>
+        <h2 className="mt-20  border-black w-full border-t-2 border-r-2 h-10"></h2>
+      </div>
       <Spin spinning={isLoading}>
         <Swiper
           modules={[Navigation, Autoplay]}
@@ -34,19 +42,19 @@ const KidProducts = () => {
           navigation={true}
           pagination={{ clickable: true, el: ".swiper-pagination" }}
           breakpoints={{
-            '@0.00': {
+            "@0.00": {
               slidesPerView: 1,
               spaceBetween: 10,
             },
-            '@0.75': {
+            "@0.75": {
               slidesPerView: 2,
               spaceBetween: 20,
             },
-            '@1.00': {
+            "@1.00": {
               slidesPerView: 3,
               spaceBetween: 40,
             },
-            '@1.50': {
+            "@1.50": {
               slidesPerView: 4,
               spaceBetween: 50,
             },
@@ -55,7 +63,7 @@ const KidProducts = () => {
           {productsData?.data?.map((product, index) => (
             <SwiperSlide key={index}>
               <Badge.Ribbon
-              placement="start"
+                placement="start"
                 text={
                   product.discount !== 0 ? `discount${product.discount}%` : ""
                 }
@@ -68,10 +76,10 @@ const KidProducts = () => {
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ duration: 0.5, delay: .5 }}
+                      transition={{ duration: 0.5, delay: 0.5 }}
                       whileHover={{ scale: 1.1 }}
                       className="rounded-t-md cursor-pointer border border-neutral-100 shadow-lg overflow-hidden"
-                        style={{ width: "300px", height: "200px" }}
+                      style={{ width: "300px", height: "200px" }}
                     >
                       <img
                         alt="example"
@@ -84,7 +92,7 @@ const KidProducts = () => {
                 >
                   <Meta
                     title={
-                      <h4 className="text-blace capitalize text-textprimary text-center">
+                      <h4 className="text-blace capitalize text-primary text-center">
                         {product.name}
                       </h4>
                     }
@@ -95,8 +103,8 @@ const KidProducts = () => {
                         key={item.size}
                         className={`flex justify-center items-center px-3 py-0.5 border divide-x-4 border-gray-300 ${
                           item?.stock === 0
-                            ? "text-textprimary rounded-[4px] font-semibold line-through "
-                            : "text-textsecoundary rounded-[4px] font-semibold"
+                            ? "text-primary rounded-[4px] font-semibold line-through "
+                            : "text-secondary rounded-[4px] font-semibold"
                         }`}
                         style={{ textDecorationThickness: "2px" }}
                       >
@@ -135,6 +143,7 @@ const KidProducts = () => {
           ))}
         </Swiper>
       </Spin>
+      <h2 className="mb-20 border-black w-full h-10 border-l-2 border-b-2 border-r-2"></h2>
     </div>
   );
 };
