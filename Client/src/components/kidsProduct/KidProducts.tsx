@@ -28,7 +28,7 @@ const KidProducts = () => {
       <div className="flex align-center  gap-5 items-center">
         <h2 className="mt-20 border-black border-l-2 border-t-2 h-10 w-full"></h2>
 
-        <h2 className="pt-10 flex justify-center items-center md:w-[400px] md:text-[16px] text-[12px]">
+        <h2 className="pt-10 flex justify-center items-center text-primary w-[400px]  md:lg:w-[400px] font-semibold md:text-[15px] text-[12px]">
           KIDS COLLECTION
         </h2>
         <h2 className="mt-20  border-black w-full border-t-2 border-r-2 h-10"></h2>

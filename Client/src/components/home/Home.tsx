@@ -6,12 +6,10 @@ import KidProducts from "../kidsProduct/KidProducts";
 
 import SubBanner from "../subBanner/SubBanner";
 
-import CustomeDivider from "../customeDivider/CustomeDivider";
 
 import { motion } from "framer-motion";
 import CookieBanner from "../cookieBanner/CookieBanner";
 import NewBestSellingProducts from "../bestSellingProduct/NewBestSelling";
-
 
 const Home = () => {
   return (
@@ -26,27 +24,15 @@ const Home = () => {
       <div>
         <SubBanner />
       </div>
-      <div className="mt-12 mb-12 ">
-        <CustomeDivider title={"best selling products"} />
-      </div>
-      <NewBestSellingProducts />
-      <div className="mt-12 mb-12 ">
-        <CustomeDivider title={" Men's Collection"} />
-      </div>
-      <MenProduct />
 
-      <div className="mt-12 mb-12 ">
-        <CustomeDivider title={" Women's Collection"} />
-      </div>
+      <NewBestSellingProducts />
+
+      <MenProduct />
 
       <CookieBanner />
 
       <WomenProduct />
-      {/* <div className="mt-12 mb-12">
-        <CustomeDivider title={" Kid's Collection"} />
-      </div> */}
       <KidProducts />
-
     </>
   );
 };
