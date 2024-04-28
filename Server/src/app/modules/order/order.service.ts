@@ -1,101 +1,192 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Order } from './order.model';
 
-import { TOrder } from './order.interface';
+
 import { sendEmail } from '../../utils/sendEmail';
+import { Product } from '../products/product.model';
 
-const createOrderIntoDB = async (payload: TOrder) => {
-  const result = await Order.create(payload);
- //send email with invoice
-const orderUI =  `
+// const createOrderIntoDB = async (payload: TOrder) => {
+//   const result = await Order.create(payload);
+//  //send email with invoice
+// const orderUI =  `
     
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice</title>
-</head>
-<body style="background-color: #f3f4f6; padding: 20px; font-family: Arial, sans-serif;">
-<div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-    <div style="background-color: #a1a1a136;padding-left: 20px;  padding-right: 20px; padding-top: 30px; border-radius: 15px;">
-        <div style="text-align: center; margin-bottom: 20px;">
-            <div style="background-color: #f3f4f6; padding: 20px; margin-bottom: 10px;">
-              <img src="https://i.ibb.co/HqRBG9S/PNG-Richkid-Logo.png" alt="logo">
-            </div>
-              <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Invoice</h2>
-              <p style="font-size: 14px; color: #7a7a7a; margin-top: 5px;">Order ID# 438904</p>
-          </div>
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Invoice</title>
+// </head>
+// <body style="background-color: #f3f4f6; padding: 20px; font-family: Arial, sans-serif;">
+// <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+//     <div style="background-color: #a1a1a136;padding-left: 20px;  padding-right: 20px; padding-top: 30px; border-radius: 15px;">
+//         <div style="text-align: center; margin-bottom: 20px;">
+//             <div style="background-color: #f3f4f6; padding: 20px; margin-bottom: 10px;">
+//               <img src="https://i.ibb.co/HqRBG9S/PNG-Richkid-Logo.png" alt="logo">
+//             </div>
+//               <h2 style="font-size: 24px; font-weight: bold; margin: 0;">Invoice</h2>
+//               <p style="font-size: 14px; color: #7a7a7a; margin-top: 5px;">Order ID# 438904</p>
+//           </div>
 
-          <div style="margin-bottom: 20px;">
-              <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Shipping Address</h3>
-              <p style="font-size: 14px; color: #333333; margin: 0;">${payload?.buyerName}</p>
-              <p style="font-size: 14px; color: #333333; margin: 0;">${payload?.address}</p>
+//           <div style="margin-bottom: 20px;">
+//               <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Shipping Address</h3>
+//               <p style="font-size: 14px; color: #333333; margin: 0;">${payload?.buyerName}</p>
+//               <p style="font-size: 14px; color: #333333; margin: 0;">${payload?.address}</p>
           
-              <p style="font-size: 14px; color: #333333; margin: 0;">Phone: ${payload?.mobile}</p>
-              <p style="font-size: 14px; color: #333333; margin: 0;">Email: ${payload?.buyerEmail}</p>
-          </div>
+//               <p style="font-size: 14px; color: #333333; margin: 0;">Phone: ${payload?.mobile}</p>
+//               <p style="font-size: 14px; color: #333333; margin: 0;">Email: ${payload?.buyerEmail}</p>
+//           </div>
 
-          <div style="margin-bottom: 20px;">
-              <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Order Summary</h3>
-              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                  <tbody>
-                      <tr>
-                          <td style="padding: 8px 0;">Payment Method:</td>
-                          <td style="padding: 8px 0;">Cash on Delivery</td>
-                      </tr>
-                      <tr>
-                          <td style="padding: 8px 0;">Shipping Method:</td>
-                          <td style="padding: 8px 0;">Home Delivery</td>
-                      </tr>
-                      <tr>
-                          <td style="padding: 8px 0;">Sub-Total:</td>
-                          <td style="padding: 8px 0;">${payload?.totalPrice} <span style="font-size: 8px;" > (+ included delivery charge ) </span></td>
-                      </tr>
+//           <div style="margin-bottom: 20px;">
+//               <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Order Summary</h3>
+//               <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+//                   <tbody>
+//                       <tr>
+//                           <td style="padding: 8px 0;">Payment Method:</td>
+//                           <td style="padding: 8px 0;">Cash on Delivery</td>
+//                       </tr>
+//                       <tr>
+//                           <td style="padding: 8px 0;">Shipping Method:</td>
+//                           <td style="padding: 8px 0;">Home Delivery</td>
+//                       </tr>
+//                       <tr>
+//                           <td style="padding: 8px 0;">Sub-Total:</td>
+//                           <td style="padding: 8px 0;">${payload?.totalPrice} <span style="font-size: 8px;" > (+ included delivery charge ) </span></td>
+//                       </tr>
   
-                      <tr>
-                          <td style="padding: 8px 0; border-top: 1px solid #e0e0e0; font-weight: bold;">Total:</td>
-                          <td style="padding: 8px 0; border-top: 1px solid #e0e0e0; font-weight: bold;">${payload?.totalPrice}</td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+//                       <tr>
+//                           <td style="padding: 8px 0; border-top: 1px solid #e0e0e0; font-weight: bold;">Total:</td>
+//                           <td style="padding: 8px 0; border-top: 1px solid #e0e0e0; font-weight: bold;">${payload?.totalPrice}</td>
+//                       </tr>
+//                   </tbody>
+//               </table>
+//           </div>
 
-    </div>
-        <div>
-            <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Products</h3>
-            <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">
-                <thead>
-                    <tr>
-                        <th style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">Product</th>
-                        <th style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">Quantity</th>
-                        <th style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${payload.orderProduct
-                      .map(
-                        (product) => `
-                        <tr>
-                            <td style="padding: 8px 0;">${product.name}</td>
-                            <td style="padding: 8px 0;">${product.selectedQuantity}</td>
-                            <td style="padding: 8px 0;">${product.price}</td>
-                        </tr>
-                    `,
-                      )
-                      .join('')}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</body>
-</html>
-`
+//     </div>
+//         <div>
+//             <h3 style="font-size: 18px; font-weight: bold; margin-bottom: 10px;">Products</h3>
+//             <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">
+//                 <thead>
+//                     <tr>
+//                         <th style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">Product</th>
+//                         <th style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">Quantity</th>
+//                         <th style="padding: 8px 0; border-bottom: 1px solid #e0e0e0;">Total</th>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     ${payload.orderProduct
+//                       .map(
+//                         (product) => `
+//                         <tr>
+//                             <td style="padding: 8px 0;">${product.name}</td>
+//                             <td style="padding: 8px 0;">${product.selectedQuantity}</td>
+//                             <td style="padding: 8px 0;">${product.price}</td>
+//                         </tr>
+//                     `,
+//                       )
+//                       .join('')}
+//                 </tbody>
+//             </table>
+//         </div>
+//     </div>
+// </body>
+// </html>
+// `
 
 
-  sendEmail(payload.buyerEmail ,"Your order at Richkid Shoes has been received!" ,orderUI );
-  return result;
+//   sendEmail(payload.buyerEmail ,"Your order at Richkid Shoes has been received!" ,orderUI );
+//   return result;
+// };
+
+export type TProductOrder = {
+  productId: string;
+  selectedQuantity: number |undefined;
+  image: string;
+  price: number;
+  name: string;
+  discount: number;
+  size: string;
 };
+
+export type TOrder = {
+  buyerName: string;
+  buyerEmail: string;
+  address: string;
+  mobile: number;
+  additionalInfo: string;
+  totalPrice: number;
+  paymentSystem: string;
+  orderNumber: string;
+  orderDate: string;
+  deliveryStatus?: string;
+  orderProduct?: TProductOrder[];
+};
+
+const createOrderIntoDB = async (payload: TOrder): Promise<any> => {
+  const session = await Order.startSession();
+  session.startTransaction();
+
+  try {
+    const result = await Order.create(payload);
+   
+
+    // Updating product stock and sell quantities
+    const orderProducts = payload.orderProduct || [];
+    for (const orderProduct of orderProducts) {
+      const product = await Product.findById(orderProduct.productId);
+
+      if (!product) {
+        throw new Error(`Product with ID ${orderProduct.productId} not found`);
+      }
+
+      // console.log(product)
+      if (!product.sizeStok) {
+        throw new Error(`Size stock is not initialized for product ${product._id}`);
+      }
+
+      const sizeStock = product.sizeStok.find((stock) => stock.size === orderProduct.size);
+      // console.log(sizeStock);
+
+      if (!sizeStock) {
+        throw new Error(`Stock for size ${orderProduct.size} not found for product ${product._id}`);
+      }
+
+      // Update sell quantity
+      if (product.sellsQuantity !== undefined) {
+        product.sellsQuantity += orderProduct.selectedQuantity || 0; 
+      } else {
+        product.sellsQuantity = orderProduct.selectedQuantity || 0; 
+      }
+
+      // Update stock
+      sizeStock.stock -= orderProduct.selectedQuantity || 0; 
+
+      if (sizeStock.stock < 0) {
+        throw new Error(`Stock for size ${orderProduct.size} cannot be negative for product ${product._id}`);
+      }
+
+      if (sizeStock.stock === 0 && orderProducts.some(op => op.productId.toString() === product._id.toString() && op.size === sizeStock.size)) {
+        throw new Error(`Stock for size ${orderProduct.size} is zero for product ${product._id} and there are still pending orders for this product`);
+      }
+
+      await product.save();
+    }
+
+    await session.commitTransaction();
+
+    return result;
+  } catch (error) {
+    console.error("Error creating order:", error); // Debugging statement
+    await session.abortTransaction();
+    throw error;
+  } finally {
+    session.endSession();
+  }
+};
+
+
+
 
 const getAllOrdersFromDB = async () => {
   const result = await Order.find().sort({ createdAt: -1 });
@@ -114,6 +205,7 @@ const getSingleOrderByOrderNumberFromDB = async (id: string) => {
 
 const updateOrderIntoDB = async (id: string, payload: Partial<TOrder>) => {
   const buyerData = await Order.findById(id);
+  console.log(buyerData);
 const deliveryEmailData = `<!DOCTYPE html>
 <html lang="en">
 <head>
