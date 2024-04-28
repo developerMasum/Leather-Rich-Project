@@ -53,7 +53,7 @@ const ProductDetails = () => {
           </div>
 
           <div className="md:max-w-[60%] border border-neutral-[1px] rounded-sm">
-            <div className="py-5 flex justify-evenly items-center bg-texthexa">
+            <div className="py-5 flex justify-evenly items-center bg-neutral-100">
             <h4 className="text-lg text-balance md:text-xl text-center font-semibold text-textprimary capitalize mb-0">
               {product?.data[0]?.name}
              
@@ -71,21 +71,21 @@ const ProductDetails = () => {
             <Divider className="m-0" />
             <div className="flex justify-between items-center px-10 py-1">
               <p className="text-gray-600 font-semibold text-sm">Price:</p>
-              <p className="text-end text-balance text-sm text-gray-500">
-                ৳{product?.data[0]?.price}
+              <p className="text-end text-balance text-md font-semibold text-gray-500">
+                ৳ {product?.data[0]?.price}
               </p>
             </div>
             <Divider className="m-0" />
             <div className="flex justify-between items-center px-10 py-1">
               <p className="text-gray-600 font-semibold text-sm">Discount:</p>
-              <p className="text-end text-balance text-sm text-gray-500">
+              <p className="text-end text-balance  text-md font-semibold text-red-500">
                 {product?.data[0]?.discount}%
               </p>
             </div>
             <Divider className="m-0" />
             <div className="flex justify-between items-center px-10 py-1">
               <p className="text-gray-600 font-semibold text-sm">Net Price:</p>
-              <p className="text-end text-balance text-sm text-gray-500">
+              <p className="text-end text-balance  text-md font-semibold text-red-500">
                 ৳
                 {Math.round(
                   product?.data[0]?.price -

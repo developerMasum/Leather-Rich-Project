@@ -5,7 +5,7 @@ import "./Navbar.css";
 import { useNavigate } from "react-router-dom";
 import { Button, Drawer, Flex, Menu } from "antd";
 import { useState } from "react";
-import logo from '../../assets/images/PNG-Richkid-Logo.png'
+import logo from '../../assets/images/trendyLogo.jpg'
 import {
   ManOutlined,
   MenuOutlined,

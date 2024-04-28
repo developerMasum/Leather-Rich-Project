@@ -10,7 +10,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import logo from "../../assets/images/PNG-Richkid-Logo.png";
+import logo from "../../assets/images/trendyLogo.jpg";
 import { GiCheckMark } from "react-icons/gi";
 import { Divider } from "antd";
 
@@ -33,7 +33,7 @@ const Login = () => {
         email: values.email,
         password: values.password,
       };
-      console.log("login page", userInfo);
+    
       login(userInfo);
 
       const res = await login(userInfo).unwrap();
@@ -111,7 +111,10 @@ const Login = () => {
           transition={{ ease: "easeInOut", duration: 1, delay: 1 }}
           className=" max-w-[1300px] md:lg:max-w-[500px] w-full px-4 py-6 md:lg:w-1/2 rounded-lg "
         >
-          <img className="mx-auto" src={logo} alt="logo" />
+          {/* <img className="mx-auto" src={logo} alt="logo"/> */}
+          <div className="flex justify-center items-center p-2">
+          <img src={logo} alt="trendy" className="h-[50px] w-[100px] object-fill mr-4 rounded" />
+          </div>
           <h2 className="text-2xl font-bold mb-4 text-center text-primary">
             Login TrendyLeather
           </h2>

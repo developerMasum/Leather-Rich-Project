@@ -97,10 +97,32 @@ export const deliveryColors = {
 };
 
 
-export type TOrder= {
- name:string;
- orderNumber:string
-}
+
+export type TProductOrder = {
+
+  productId: string;
+  selectedQuantity: number;
+  image: string;
+  price: number;
+  name:string,
+  discount:number,
+  size:string
+};
+
+export type TOrder = {
+  _id:string;
+  buyerName: string;
+  buyerEmail: string;
+  address: string;
+  mobile: number;
+  additionalInfo: string;
+  totalPrice: number;
+  paymentSystem: string;
+  orderNumber: string;
+  orderDate: string;
+  deliveryStatus?: string;
+  orderProduct: TProductOrder[];
+};
 
 
 

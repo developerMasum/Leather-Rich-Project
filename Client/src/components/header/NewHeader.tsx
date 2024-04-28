@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Drawer, Menu } from "antd";
 import { motion } from "framer-motion";
-import logo from "../../assets/images/PNG-Richkid-Logo.png";
+import logo from "../../assets/images/trendyLogo.jpg";
 import { items } from "../../utils/item";
 import { Link, useNavigate } from "react-router-dom";
 import ShoppingCart from "../shopingCart/ShoppingCart";
@@ -78,7 +78,7 @@ const NewHeader = () => {
           className="flex items-center"
         >
           <Link to="/">
-            <img src={logo} alt="Richkid" className="h-10 w-auto mr-4" />
+          <img src={logo} alt="trendy" className="h-[50px] w-[100px] object-fill mr-4 rounded" />
           </Link>
         </motion.div>
         <div  className="max-w-md justify-center items-center hidden sm:inline-flex">
@@ -116,7 +116,7 @@ const NewHeader = () => {
                     animate={{ opacity: 1, y: 0,  }}
                     transition={{ duration: 0.3, delay: 0.5 }}
                     exit={{ opacity: 0, y: 30 }}
-                    className="absolute bg-primary  mt-4 p-4 rounded shadow-lg"
+                    className="absolute bg-neutral-100   mt-4 p-4 rounded shadow-lg"
                     style={{ zIndex: 999 }}
                   >
                     {item.children.map((child) => (
@@ -125,7 +125,7 @@ const NewHeader = () => {
                       transition={{ type: "spring", stiffness: 200, damping: 20, delay:.1 }}
                         key={child.key}
                         onClick={() => handleSubMenuClick(child)}
-                        className="block text-gray-800 text-sm hover:border-b-2 hover:border-white hover:border-dashed hover:border-b-white  text-center font-semibold w-[200px] cursor-pointer hover:text-white rounded-r-s py-1 px-1 mt-0"
+                        className="block text-gray-800 text-sm hover:bg-primary hover:p-[6px]  text-center font-semibold hover:rounded-sm w-[200px] cursor-pointer hover:text-white rounded-r-s py-1 px-1 mt-0"
                       >
                         {child.label}
                       </motion.button>

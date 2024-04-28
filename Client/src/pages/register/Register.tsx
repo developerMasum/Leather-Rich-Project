@@ -8,7 +8,7 @@ import { TResponse, TUser } from "../../types/global.type";
 import { useCreateUserMutation } from "../../redux/features/user/userApi";
 
 import { motion } from "framer-motion";
-import logo from '../../assets/images/PNG-Richkid-Logo.png'
+import logo from '../../assets/images/trendyLogo.jpg'
 
 const Register = () => {
   const [register, { isLoading }] = useCreateUserMutation();
@@ -52,7 +52,10 @@ const Register = () => {
       initial="hidden"
       animate="visible"
       transition={{ ease: "easeInOut", duration: 1,delay:1 }} className="max-w-[500px] p-4 rounded-lg  border-[3px] shadow-2xl border-neutral-100 ">
-           <img className="mx-auto" src={logo} alt="logo"/>
+           {/* <img className="mx-auto" src={logo} alt="logo"/> */}
+          <div className="flex justify-center items-center p-2">
+          <img src={logo} alt="trendy" className="h-[50px] w-[100px] object-fill mr-4 rounded" />
+          </div>
         <h2 className="text-2xl font-bold mb-4 text-center text-textprimary">Register Now</h2>
         <Form
           name="register"
@@ -62,6 +65,7 @@ const Register = () => {
         >
           <Form.Item
             label="Your Name"
+          
             name="userName"
             rules={[
               { required: true, message: "Please input your userName" },
@@ -96,7 +100,7 @@ const Register = () => {
             <Input.Password placeholder="Enter your password" />
           </Form.Item>
 
-          <p className="text-gray-600 text-sm text-blance">
+          <p className="text-gray-600 text-sm text-blance p-4">
             Your personal data will be used to support your experience
             throughout this website, to manage access to your account, and for
             other purposes described in our privacy policy.

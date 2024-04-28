@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { Button, Col, Divider, Result, Row, Spin } from "antd";
 import { useGetSingleOrderByOrderNumberQuery } from "../../redux/features/order/orderApi";
+import logo from './../../assets/images/trendyLogo.jpg'
 
 
 
@@ -11,13 +12,15 @@ const OrderSuccess = () => {
   console.log(id)
   const { data, isLoading } = useGetSingleOrderByOrderNumberQuery(id);
 
+  console.log(data)
+
   // Format date if available
   const formatDate = (date:any) => {
     return date ? new Date(date).toLocaleDateString() : "";
   };
 
   return (
-    <div style={{ maxWidth: "800px", margin: "auto" }}>
+    <div style={{ maxWidth: "800px", margin: "auto"  }}>
       <Spin spinning={isLoading}>
         <Result
           status="success"
@@ -27,7 +30,11 @@ const OrderSuccess = () => {
          
           extra={[
             <div key="paymentDetails" >
+              
                 <div className="max-w-md border shadow-sm  rounded-md p-2 mx-auto">
+                <div className="flex justify-center items-center p-4">
+                <img src={logo} alt="trendy" className="h-[50px] w-[100px] object-fill mr-4 rounded" />
+                </div>
                     <h4 className="text-lg underline-offset-4 mb-2 underline font-semibold text-gray-600 uppercase">Order Details</h4>
                 <div className="flex justify-between items-center px-10 ">
                     <p className="font-medium text-gray-500">

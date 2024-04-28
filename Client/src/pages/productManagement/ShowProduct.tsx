@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Button,
   Table,
-  
   Space,
   message,
   Pagination,
@@ -15,8 +14,6 @@ import {
 import {
   useGetAllProductsQuery,
   useDeleteProductMutation,
-  
-  
 } from "../../redux/features/product/productApi";
 
 import { Link } from "react-router-dom";
@@ -29,8 +26,6 @@ import {
 import CustomeDivider from "../../components/customeDivider/CustomeDivider";
 import { IoMdClose } from "react-icons/io";
 import { FaRegEdit } from "react-icons/fa";
-
-
 
 const ShowProduct = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
@@ -49,13 +44,8 @@ const ShowProduct = () => {
 
   const [deleteProduct] = useDeleteProductMutation();
 
-
-
-
-
-
   const handleDelete = async (id: string) => {
-    console.log(id)
+    console.log(id);
     try {
       await deleteProduct(id);
       message.success("Product deleted successfully");
@@ -63,16 +53,6 @@ const ShowProduct = () => {
       message.error("Failed to delete product");
     }
   };
-
-  
-
-
-
- 
-
-
-
- 
 
   const handleCategoryFilter = (value: string | null) => {
     setSelectedCategory(value || "");
@@ -131,7 +111,6 @@ const ShowProduct = () => {
     });
   };
 
-
   const columns = [
     {
       title: "Image",
@@ -181,8 +160,11 @@ const ShowProduct = () => {
           <Link to={`/superAdmin/duplicate-product/${record?._id}`}>
             <Button icon={<FaRegEdit />}></Button>
           </Link>
-         
-          <Button icon={<IoMdClose />} onClick={() => handleDelete(record._id)}></Button>
+
+          <Button
+            icon={<IoMdClose />}
+            onClick={() => handleDelete(record._id)}
+          ></Button>
         </Space>
       ),
     },
@@ -258,7 +240,7 @@ const ShowProduct = () => {
           bordered
         />
       )}
-      
+
       <Flex justify="center" align="center" style={{ marginTop: "30px" }}>
         <Pagination
           current={page}

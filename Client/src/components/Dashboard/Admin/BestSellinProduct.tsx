@@ -15,7 +15,7 @@ interface ProductInfo {
 const BestSellingProductList: React.FC = () => {
   const [params, setParams] = useState<TQueryParam[]>([]);
   const { data: productsData } = useGetAllProductsQuery([
-    { name: "sort", value: "-price" },
+    { name: "sort", value: "-totalSells" },
     ...params,
   ]);
   const productInfo: ProductInfo[] | undefined = productsData?.data;

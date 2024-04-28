@@ -6,13 +6,14 @@ import { orderController } from './order.controller';
 
 const router = express.Router();
 
-router.get('/success-order/:id', orderController.getSingleOrderByOrderNumber);
 
+router.patch('/cancel-order/:id', orderController.cancelOrder);
 router.post(
   '/create-order',
   orderController.createOrder,
 );
 router.get('/', orderController.getAllOrders);
+router.get('/success-order/:id', orderController.getSingleOrderByOrderNumber);
 router.get('/successful-orders', orderController.successfulDelivery);
 router.patch('/update-delivery/:id', orderController.updateOrder);
 // router.put(
@@ -25,6 +26,7 @@ router.patch('/update-delivery/:id', orderController.updateOrder);
 
 router.post('/create-checkout-session')
 router.get('/get-single-order/:id', orderController.getSingleOrder);
+router.get('/get-my-orders/:email', orderController.getMyOrders);
 
 // router.delete('/product/:productId', ProductController.deleteProduct);
 

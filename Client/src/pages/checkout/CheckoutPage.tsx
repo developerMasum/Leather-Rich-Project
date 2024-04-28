@@ -3,9 +3,9 @@ import { Button, Divider, Form, Input, Table, Radio } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link, useNavigate } from "react-router-dom";
-import { removeFromCart } from "../../redux/features/cart/cartSlice";
+import {  clearCart, removeFromCart } from "../../redux/features/cart/cartSlice";
 import { useState } from "react";
-import { TbCoinTaka } from "react-icons/tb";
+
 import { IoPlaySkipBackOutline } from "react-icons/io5";
 import { generateOrder } from "../../utils/order";
 import { useCurrentUser } from "../../redux/features/auth/authSlice";
@@ -13,7 +13,6 @@ import { useCreateOrderMutation } from "../../redux/features/order/orderApi";
 import { toast } from "react-toastify";
 import SslCommerceImg from "../../components/sslCommerceImage/SslCommerceImg";
 import { addToOrder } from "../../redux/features/order/orderSlice";
-
 
 interface FormValues {
   fullName: string;
@@ -26,15 +25,13 @@ const CheckoutPage = () => {
   const [createOrder, { isLoading }] = useCreateOrderMutation();
   const cart = useAppSelector((state) => state.cart);
   const [shippingCost, setShippingCost] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState("");
+
   const user = useAppSelector(useCurrentUser);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
- 
 
   const subtotal = cart?.cartTotalAmount || 0;
   const total = subtotal + shippingCost;
-
 
   const handleRemoveFromCart = (product: any) => {
     dispatch(removeFromCart(product));
@@ -44,10 +41,7 @@ const CheckoutPage = () => {
     setShippingCost(event.target.value);
   };
 
-  const handlePaymentMethodChange = (event: any) => {
-    setPaymentMethod(event.target.value);
-  };
-
+ 
   const columns = [
     {
       title: "Image",
@@ -81,7 +75,7 @@ const CheckoutPage = () => {
       title: "Update",
       dataIndex: "edit",
       key: "edit",
-      render: (_:any, record: any) => (
+      render: (_: any, record: any) => (
         <Link to={`/product/${record.id}`}>
           <Button icon={<EditOutlined />} className="border border-red-400" />
         </Link>
@@ -91,7 +85,7 @@ const CheckoutPage = () => {
       title: "Remove",
       dataIndex: "remove",
       key: "remove",
-      render: (_:any, record: any) => (
+      render: (_: any, record: any) => (
         <Button
           className="border border-red-400"
           icon={<DeleteOutlined />}
@@ -101,10 +95,9 @@ const CheckoutPage = () => {
     },
   ];
 
-
-  if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
-   navigate('/')
-  }
+  // if (!cart || !cart.cartItems || cart.cartItems.length === 0) {
+  //   navigate("/");
+  // }
 
   const data = cart?.cartItems?.map((item: any) => ({
     key: item.id,
@@ -138,20 +131,23 @@ const CheckoutPage = () => {
       additionalInfo: values.additionalInfo,
       orderProduct: product,
       totalPrice: total,
-      paymentSystem: paymentMethod,
+      paymentSystem: "cash on delivery",
       orderNumber,
       orderDate: new Date(),
     };
-    
-    const orderSliceData={
-      name:values.fullName,orderNumber
-    }
 
-    dispatch(addToOrder(orderSliceData))
+    const orderSliceData = {
+      name: values.fullName,
+      orderNumber,
+    };
 
+    dispatch(addToOrder(orderSliceData));
 
     try {
-      const res = await createOrder(orderData);
+      const res = await createOrder(orderData).unwrap();
+     if(res?.data){
+      dispatch(clearCart())
+     }
       if ("error" in res) {
         // toast.error(res?.error?.data?.message);
       } else {
@@ -165,8 +161,6 @@ const CheckoutPage = () => {
 
     console.log("Received values:", orderData);
   };
-
-
 
   return (
     <div className="w-full">
@@ -233,23 +227,6 @@ const CheckoutPage = () => {
               <p className="uppercase font-semibold">Total</p>
               <p className="uppercase font-semibold">{total}৳</p>
             </div>
-
-            <Radio.Group
-              className="flex flex-col gap-2 mt-2"
-              onChange={handlePaymentMethodChange}
-              value={paymentMethod}
-            >
-              <div className="bg-neutral-200 p-2 rounded-sm">
-                <Radio disabled={shippingCost === 0} value="cash-on-delivery">
-                  Cash On Delivery
-                </Radio>
-              </div>
-              <div className="bg-neutral-200 p-2 rounded-sm">
-                <Radio disabled={shippingCost === 0} value="cash-on-payment">
-                  Cash On Payment
-                </Radio>
-              </div>
-            </Radio.Group>
           </div>
         </div>
         <div className="md:w-1/2">
@@ -306,33 +283,18 @@ const CheckoutPage = () => {
               />
             </Form.Item>
 
-            {paymentMethod === "cash-on-delivery" && (
-              <Form.Item>
-                <Button
-                  block
-                  htmlType="submit"
-                  className="btn"
-                  icon={<IoPlaySkipBackOutline />}
-                  loading={isLoading}
-                 
-                >
-                  Order Place Now
-                </Button>
-              </Form.Item>
-            )}
-
-            {paymentMethod === "cash-on-payment" && (
-              <Form.Item>
-                <Button
-                  block
-                  htmlType="submit"
-                  className="btn"
-                  icon={<TbCoinTaka className="text-sm" />}
-                >
-                  Pay By Bkash
-                </Button>
-              </Form.Item>
-            )}
+            <Form.Item>
+              <Button
+                block
+                htmlType="submit"
+                className="btn"
+                icon={<IoPlaySkipBackOutline />}
+                loading={isLoading}
+                disabled={shippingCost === 0}
+              >
+                Order Place Now
+              </Button>
+            </Form.Item>
           </Form>
         </div>
       </div>

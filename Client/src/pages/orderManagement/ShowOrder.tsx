@@ -101,15 +101,25 @@ const ShowOrder = () => {
         switch (record) {
           case "processing":
             return (
-<p className="flex justify-start items-center gap-2 text-red-700 ">Processing<BiLoader size={25} /> </p>
-
+              <p className="flex justify-start items-center gap-2 text-red-700 ">
+                Processing
+                <BiLoader size={25} />{" "}
+              </p>
             );
           case "shipped":
             return (
-               <p className="flex justify-start items-center gap-2 text-cyan-700 ">Shipped<LiaShippingFastSolid size={25} /> </p>
+              <p className="flex justify-start items-center gap-2 text-cyan-700 ">
+                Shipped
+                <LiaShippingFastSolid size={25} />{" "}
+              </p>
             );
           case "delivered":
-            return <p className="flex justify-start items-center gap-2 text-green-700 ">Delivered<IoCheckmarkDoneCircle size={25} /> </p>;
+            return (
+              <p className="flex justify-start items-center gap-2 text-green-700 ">
+                Delivered
+                <IoCheckmarkDoneCircle size={25} />{" "}
+              </p>
+            );
           default:
             return record;
         }
@@ -141,29 +151,29 @@ const ShowOrder = () => {
         //   <Button  type="dashed" danger>Download</Button>
         // </Link>
 
-//<PDFDownloadLink
-// document={<PdfDocument data={record} />}
-// fileName={`invoice_${record.buyerName}_${record?.orderNumber}.pdf`}
+        //<PDFDownloadLink
+        // document={<PdfDocument data={record} />}
+        // fileName={`invoice_${record.buyerName}_${record?.orderNumber}.pdf`}
 
-// >
-// {({ loading }) => (loading ? 'Loading...' :  <Button type="default" icon={<DownloadOutlined />} size={"middle"}>Download PDF</Button>)}
-// </PDFDownloadLink> 
+        // >
+        // {({ loading }) => (loading ? 'Loading...' :  <Button type="default" icon={<DownloadOutlined />} size={"middle"}>Download PDF</Button>)}
+        // </PDFDownloadLink>
 
-<PDFDownloadLink
-      document={<PdfDocument data={record} />}
-      fileName={`invoice_${record.buyerName}_${record?.orderNumber}.pdf`}
-    >
-      {({ loading }) => (
-        <View>
-          {/* <InvoiceTableRow invoice={record} /> */}
-          {/* <InvoiceItemsTable invoice={record} /> */}
-          
-          <Button type="default" icon={<DownloadOutlined />} size="middle">
-            {loading ? 'Loading...' : 'Download PDF'}
-          </Button>
-        </View>
-      )}
-    </PDFDownloadLink>
+        <PDFDownloadLink
+          document={<PdfDocument data={record} />}
+          fileName={`invoice_${record.buyerName}_${record?.orderNumber}.pdf`}
+        >
+          {({ loading }) => (
+            <View>
+              {/* <InvoiceTableRow invoice={record} /> */}
+              {/* <InvoiceItemsTable invoice={record} /> */}
+
+              <Button type="default" icon={<DownloadOutlined />} size="middle">
+                {loading ? "Loading..." : "Download PDF"}
+              </Button>
+            </View>
+          )}
+        </PDFDownloadLink>
       ),
     },
   ];
@@ -178,7 +188,7 @@ const ShowOrder = () => {
       orderNumber,
       totalPrice,
       paymentSystem,
-      orderProduct
+      orderProduct,
     }: any) => ({
       key: _id,
       buyerName,
@@ -188,7 +198,7 @@ const ShowOrder = () => {
       orderNumber,
       totalPrice,
       paymentSystem,
-      orderProduct
+      orderProduct,
     })
   );
 

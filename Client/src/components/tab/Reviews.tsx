@@ -67,7 +67,7 @@ const Reviews = ({ product }: { product: TProduct }) => {
             form={form}
             onFinish={onFinish}
             layout="vertical"
-            className="mt-0 bg-neutral-100 shadow-md space-y-0"
+            className="mt-0 bg-neutral-50 shadow-md space-y-0"
           >
             <Form.Item
               label="Name"
@@ -93,7 +93,7 @@ const Reviews = ({ product }: { product: TProduct }) => {
               <Input.TextArea placeholder="Write your's reviews......" />
             </Form.Item>
             <Form.Item>
-              <Button loading={isLoading} htmlType="submit">
+              <Button loading={isLoading} htmlType="submit" className="my-10">
                 Submit Review
               </Button>
             </Form.Item>

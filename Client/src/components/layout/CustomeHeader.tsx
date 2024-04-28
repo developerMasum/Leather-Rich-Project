@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import image from "./..//../assets/images/PNG-Richkid-Logo.png";
+import logo from "./..//../assets/images/trendyLogo.jpg";
 
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
@@ -10,25 +10,25 @@ import { BellFilled, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { Badge, Button, List, Modal } from "antd";
 
-
 import { useState } from "react";
-import {  TOrder, TReview } from "../../types/global.type";
+import { TOrder, TReview } from "../../types/global.type";
 import { clearReviewItems } from "../../redux/features/review/reviewSlice";
 import { clearOrderItems } from "../../redux/features/order/orderSlice";
+import { motion } from "framer-motion";
 
 const CustomeHeader = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
- 
+
   const user = useAppSelector(useCurrentUser);
+
   const review = useAppSelector((state) => state.review);
   const order = useAppSelector((state) => state.order);
 
   const dispatch = useAppDispatch();
 
-  
   const reviewsData = review.reviewItems;
-  const ordersData =order.orderItems
+  const ordersData = order.orderItems;
 
   const handleLogout = () => {
     dispatch(logout());
@@ -66,9 +66,16 @@ const CustomeHeader = () => {
 
   return (
     <div className="flex justify-center  md:justify-between items-center bg-white md:p-2 px-1 md:px-8 fixed top-0 left-0 right-0 z-10  shadow ">
-      <Link to="/">
-        <img loading="lazy" src={image} alt="" className="bg-cover bg-center" />
-      </Link>
+      <motion.div
+        whileHover={{ x: 10 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        className="flex items-center justify-center"
+      >
+        <Link to="/">
+          {/* <img src={logo} alt="Richkid" className="h-12 w-20 mr-4 rounded-md" /> */}
+          <img src={logo} alt="trendy" className="h-[50px] w-[100px] object-fill mr-4 rounded" />
+        </Link>
+      </motion.div>
       <div>
         <Button
           className="uppercase hidden md:block tracking-wider font-semibold text-primary"
@@ -79,16 +86,16 @@ const CustomeHeader = () => {
       </div>
 
       <div className="flex justify-center items-center gap-6">
-        <Badge count={review.reviewItems.length}>
-          <MailOutlined
-            className="text-[24px]"
-           
-            onClick={showModal}
-          />
-        </Badge>
-        <Badge count={order.orderItems.length}>
-          <BellFilled className="text-[24px]" onClick={showOrderModal} />
-        </Badge>
+        {user?.role === "superAdmin" && (
+          <>
+            <Badge count={review.reviewItems.length}>
+              <MailOutlined className="text-[24px]" onClick={showModal} />
+            </Badge>
+            <Badge count={order.orderItems.length}>
+              <BellFilled className="text-[24px]" onClick={showOrderModal} />
+            </Badge>
+          </>
+        )}
         <Button
           icon={<UserOutlined />}
           className="uppercase tracking-wide text-white font-semibold bg-[#7d3f98]"
@@ -110,7 +117,7 @@ const CustomeHeader = () => {
             dataSource={ordersData}
             renderItem={(item: TOrder) => {
               return (
-                <List.Item>{` ${item.name}, has oreded. ${item.orderNumber}`}</List.Item>
+                <List.Item>{` ${item?.name}, has oreded. ${item.orderNumber}`}</List.Item>
               );
             }}
           />
